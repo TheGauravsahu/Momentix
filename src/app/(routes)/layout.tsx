@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "../globals.css";
 import Sidebar from "@/components/Sidebar";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import ThemeObserver from "@/components/ThemeObserver";
 
 const interFont = Inter({ subsets: ["latin"] });
 
@@ -19,12 +20,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${interFont.className} antialiased`}>
+      <body
+        className={`${interFont.className} antialiased`}
+      >
         <main className="flex gap-1">
           <Sidebar />
           {children}
-          <SpeedInsights />
         </main>
+        <ThemeObserver />
+        <SpeedInsights />
       </body>
     </html>
   );
