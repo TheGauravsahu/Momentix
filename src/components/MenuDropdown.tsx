@@ -1,5 +1,4 @@
 "use client";
-
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,28 +15,37 @@ import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function MenuDropdown() {
   const router = useRouter();
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  useEffect(()=>{
+    const theme = localStorage.getItem("theme")
+    if (theme === "dark") {
+      setIsDarkMode(true);
+      document.documentElement.classList.add("dark");
+    }
+  },[])
 
   const toggleDarkMode = (isDark: boolean) => {
-    const mode = isDark ? "dark" : "light";
-    localStorage.setItem("theme", mode);
-
-    document.documentElement.classList.toggle(
-      "dark",
-      localStorage.theme === "dark"
-    );
-
+    if (typeof window != undefined) {
+      const mode = isDark ? "dark" : "light";
+      localStorage.setItem("theme", mode);
+      document.documentElement.classList.toggle(
+        "dark",
+        localStorage.theme === "dark"
+      );
+    }
+    setIsDarkMode(isDark);
     router.refresh();
   };
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger suppressHydrationWarning={true}>
-        <Button
-          variant="outline"
-        >
+        <Button variant="outline">
           <Menu />
           More
         </Button>
@@ -64,7 +72,7 @@ export default function MenuDropdown() {
             <div className="flex items-center space-x-2">
               <Switch
                 color="dark:bg-gray-800"
-                checked={localStorage.theme === "dark"}
+                defaultChecked={isDarkMode}
                 id="dark-mode"
                 onCheckedChange={toggleDarkMode}
               />
