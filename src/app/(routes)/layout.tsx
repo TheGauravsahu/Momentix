@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "../globals.css";
 import Sidebar from "@/components/Sidebar";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const interFont = Inter({ subsets: ["latin"] });
 
@@ -22,6 +23,7 @@ export default function RootLayout({
         <main className="flex gap-1">
           <Sidebar />
           {children}
+          <SpeedInsights />
         </main>
       </body>
     </html>
