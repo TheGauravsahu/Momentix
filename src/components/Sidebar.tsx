@@ -1,14 +1,15 @@
 import { navItems } from "@/lib/constants";
-import { Camera, Menu } from "lucide-react";
 import { Nunito_Sans } from "next/font/google";
 import Link from "next/link";
+import MenuDropdown from "./MenuDropdown";
+import { Camera } from "lucide-react";
 
 const nunitoSans = Nunito_Sans({ subsets: ["latin"] });
 
 export default function Sidebar() {
   return (
     <aside className="w-64 border-r min-h-screen p-8">
-      <div className="sticky top-0 left-0 h-full flex flex-col justify-between">
+      <div className="sticky top-0 left-0 h-full flex flex-col justify-between items-start">
         <div className="flex flex-col gap-12">
           {/* Top --> Logo */}
           <div className="font-semibold text-xl">
@@ -36,10 +37,7 @@ export default function Sidebar() {
         </div>
 
         {/* Bottom */}
-        <div className="inline-flex items-center text-center gap-1">
-          <Menu />
-          More
-        </div>
+        <MenuDropdown />
       </div>
     </aside>
   );
