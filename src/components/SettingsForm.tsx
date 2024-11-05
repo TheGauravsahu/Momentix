@@ -13,7 +13,7 @@ export default function SettingsForm({ profile }: { profile: Profile | null }) {
   const [data, action, isPending] = useActionState(upsertProfile, null);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [file, setFile] = useState<File>();
+  const [file, setFile] = useState<File | null>(null);
   const [avatarUrl, setAvatarUrl] = useState(profile?.avatar || "");
   const [uploading, setUploading] = useState(false);
 
@@ -22,30 +22,29 @@ export default function SettingsForm({ profile }: { profile: Profile | null }) {
   }
 
   useEffect(() => {
-    try {
-      if (!file) {
-        toast("No file selected");
-        return;
-      }
+    const uploadFile = async () => {
+      if (!file) return;
 
-      setUploading(true);
-      const data = new FormData();
-      data.set("file", file);
+      try {
+        setUploading(true);
+        const uploadData = new FormData();
+        uploadData.set("file", file);
 
-      fetch("/api/upload", {
-        method: "POST",
-        body: data,
-      }).then((res) => {
-        res.json().then((url) => {
-          setAvatarUrl(url);
-          setUploading(false);
+        const res = await fetch("/api/upload", {
+          method: "POST",
+          body: uploadData,
         });
-      });
-    } catch (error) {
-      console.log(error);
-      setUploading(false);
-      toast("Trouble uploading file");
-    }
+        const url = await res.json();
+        setAvatarUrl(url);
+        setUploading(false);
+      } catch (error) {
+        console.log(error);
+        setUploading(false);
+        toast("Trouble uploading file");
+      }
+    };
+
+    uploadFile();
   }, [file]);
 
   return (
@@ -67,22 +66,35 @@ export default function SettingsForm({ profile }: { profile: Profile | null }) {
           hidden
           type="file"
           ref={fileInputRef}
-          onChange={(e) => setFile(e.target?.files?.[0])}
+          onChange={(e) => setFile(e.target?.files?.[0] || null)}
         />
 
         <input hidden type="hidden" name="avatar" value={avatarUrl} />
 
-        <Button
-          type="button"
-          variant="outline"
-          disabled={uploading}
-          onClick={async () => {
-            fileInputRef.current?.click();
-          }}
-        >
-          <UploadCloud />
-          {uploading ? "Uploading..." : "Upload"}
-        </Button>
+        <div className="">
+          <Button
+            type="button"
+            variant="outline"
+            disabled={uploading}
+            onClick={async () => {
+              fileInputRef.current?.click();
+            }}
+          >
+            <UploadCloud />
+            {uploading ? "Uploading..." : "Upload"}
+          </Button>
+        </div>
+      </div>
+
+      <div className="">
+        <Label htmlFor="name">Name</Label>
+        <Input
+          required={true}
+          id="name"
+          name="name"
+          defaultValue={profile?.name || ""}
+          placeholder="Name"
+        />
       </div>
 
       <div className="">
@@ -93,6 +105,17 @@ export default function SettingsForm({ profile }: { profile: Profile | null }) {
           name="username"
           defaultValue={profile?.username || ""}
           placeholder="Username"
+        />
+      </div>
+
+      <div className="">
+        <Label htmlFor="subtitle">Subtitle</Label>
+        <Input
+          required={true}
+          id="subtitle"
+          name="subtitle"
+          defaultValue={profile?.subtitle || ""}
+          placeholder="Subtitle"
         />
       </div>
 

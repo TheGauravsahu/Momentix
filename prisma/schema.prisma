@@ -9,10 +9,12 @@ datasource db {
 
 model Profile {
   id        String     @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
   username  String     @unique
   email     String     @unique
   bio       String?
   avatar    String?
+  subtitle  String?
   posts     Post[]
   likes     Like[]
   comments  Comment[]

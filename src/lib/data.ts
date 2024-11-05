@@ -3,6 +3,7 @@ import { getUserEmail } from "./utils";
 
 export async function getCurrentUserProfile() {
   const email = await getUserEmail();
+
   try {
     const profile = await prisma.profile.findFirst({
       where: {
@@ -26,6 +27,6 @@ export async function fetchProfile(username: string) {
     return profile;
   } catch (error) {
     console.log("Failed to fetch profile", error);
-    return { message: "Failed to get profile." };
+    return null;
   }
 }

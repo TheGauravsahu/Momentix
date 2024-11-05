@@ -10,6 +10,8 @@ export async function upsertProfile(
   try {
     const userEmail = await getUserEmail();
     const profileData = {
+      name: formData.get("name") as string,
+      subtitle: formData.get("subtitle") as string,
       username: formData.get("username") as string,
       avatar: formData.get("avatar") as string,
       bio: formData.get("bio") as string,
