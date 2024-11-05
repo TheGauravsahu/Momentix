@@ -6,3 +6,76 @@ datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
 }
+
+model Profile {
+  id        String     @id @default(auto()) @map("_id") @db.ObjectId
+  username  String     @unique
+  email     String     @unique
+  bio       String?
+  avatar    String?
+  posts     Post[]
+  likes     Like[]
+  comments  Comment[]
+  bookmarks Bookmark[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  followers Follower[] @relation("followers")
+  following Follower[] @relation("following")
+}
+
+model Follower {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  followerId String?  @db.ObjectId // current user's Id
+  followedId String?  @db.ObjectId // being followed by current user.
+  createdAt  DateTime @default(now())
+
+  follower Profile? @relation("followers", fields: [followerId], references: [id])
+  followed Profile? @relation("following", fields: [followedId], references: [id])
+
+  @@unique([followerId, followedId])
+}
+
+model Post {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  caption   String
+  imageUrl  String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  likes     Like[]
+  comments  Comment[]
+  profileId String?   @db.ObjectId
+
+  profile Profile? @relation(fields: [profileId], references: [id])
+}
+
+model Like {
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  profileId String @db.ObjectId
+  postId    String @db.ObjectId
+
+  post    Post    @relation(fields: [postId], references: [id])
+  profile Profile @relation(fields: [profileId], references: [id])
+
+  @@unique([profileId, postId])
+}
+
+model Comment {
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  profileId String @db.ObjectId
+  postId    String @db.ObjectId
+  text      String
+
+  post    Post    @relation(fields: [postId], references: [id])
+  profile Profile @relation(fields: [profileId], references: [id])
+}
+
+model Bookmark {
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  profileId String @db.ObjectId
+  postId    String @db.ObjectId
+
+  profile Profile @relation(fields: [profileId], references: [id])
+
+  @@unique([profileId, postId])
+}
