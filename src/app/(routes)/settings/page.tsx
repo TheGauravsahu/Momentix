@@ -1,13 +1,14 @@
-import { getUserEmail } from "@/lib/utils";
+import SettingsForm from "@/components/SettingsForm";
+import { getCurrentUserProfile } from "@/lib/data";
 import React from "react";
 
 export default async function Settings() {
-  const userId = await getUserEmail();
+  const profile = await getCurrentUserProfile();
 
   return (
-    <div className="p-8">
+    <div className="p-8 w-full h-full">
       <h1>Settings</h1>
-      {userId}
+      <SettingsForm profile={profile} />
     </div>
   );
 }
