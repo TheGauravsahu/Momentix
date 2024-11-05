@@ -25,7 +25,6 @@ export default function MenuDropdown() {
     const theme = localStorage.getItem("theme")
     if (theme === "dark") {
       setIsDarkMode(true);
-      document.documentElement.classList.add("dark");
     }
   },[])
 
