@@ -40,7 +40,6 @@ export default function SettingsForm({ profile }: { profile: Profile | null }) {
       } catch (error) {
         console.log(error);
         setUploading(false);
-        toast("Trouble uploading file");
       }
     };
 

@@ -3,10 +3,13 @@ import { Nunito_Sans } from "next/font/google";
 import Link from "next/link";
 import MenuDropdown from "./MenuDropdown";
 import { Camera } from "lucide-react";
+import { getCurrentUserProfile } from "@/lib/data";
 
 const nunitoSans = Nunito_Sans({ subsets: ["latin"] });
 
-export default function Sidebar() {
+export default async function Sidebar() {
+  const profile = await getCurrentUserProfile();
+
   return (
     <aside className="w-64 border-r min-h-screen p-8">
       <div className="sticky top-0 left-0 h-full flex flex-col justify-between items-start">
@@ -37,7 +40,7 @@ export default function Sidebar() {
         </div>
 
         {/* Bottom */}
-        <MenuDropdown />
+        <MenuDropdown username={profile?.username as string} />
       </div>
     </aside>
   );

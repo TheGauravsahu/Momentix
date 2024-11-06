@@ -1,4 +1,5 @@
 import NavigateBack from "@/components/NavigateBack";
+import PostsImgList from "@/components/PostsImgList";
 import { Button } from "@/components/ui/button";
 import { fetchProfile } from "@/lib/data";
 import { getUserEmail } from "@/lib/utils";
@@ -17,6 +18,8 @@ export default async function ProfilePage({
 
   const profile: Profile | null = await fetchProfile(username);
   const currentUserEmail = await getUserEmail();
+
+  console.log(profile, "Profile fetched by /" + profile?.id);
 
   return (
     <div className="w-full h-full">
@@ -61,6 +64,7 @@ export default async function ProfilePage({
       {/* Posts */}
       <div className="max-w-4xl mx-auto p-8">
         <h2 className="text-center border-t pt-2">Posts</h2>
+        <PostsImgList />
       </div>
     </div>
   );

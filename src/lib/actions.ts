@@ -2,6 +2,9 @@
 import { revalidatePath } from "next/cache";
 import { prisma } from "./prisma";
 import { getUserEmail } from "./utils";
+import { getCurrentUserProfile } from "./data";
+import { redirect } from "next/navigation";
+import { signOut } from "@/auth";
 
 export async function upsertProfile(
   previousState: unknown,
@@ -30,8 +33,37 @@ export async function upsertProfile(
 
     return "Profile updated successfully.";
   } catch (error) {
-    console.log(error);
     console.error("Error updating profile:", error);
     return "Server Error: Unable to update profile.";
   }
+}
+
+export async function LogoutProfile() {
+  try {
+    await signOut();
+    revalidatePath("/");
+    return "Logged out.";
+  } catch (error) {
+    console.log("Error creating post.", error);
+    return "Error: Failed to logged out..";
+  }
+}
+
+export async function createPost(previousState: unknown, formData: FormData) {
+  const profile = await getCurrentUserProfile();
+  let post;
+
+  try {
+    post = await prisma.post.create({
+      data: {
+        caption: formData.get("caption") as string,
+        imageUrl: formData.get("postImg") as string,
+        profileId: profile?.id,
+      },
+    });
+  } catch (error) {
+    console.log("Error creating post.", error);
+    return "Error: Unable to create post.";
+  }
+  redirect(`/p/${post.id}`);
 }

@@ -4,7 +4,7 @@ import "../globals.css";
 import Sidebar from "@/components/Sidebar";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import ThemeObserver from "@/components/ThemeObserver";
-import { Toaster } from "@/components/ui/sonner";
+import { Toaster } from "@/components/ui/sonner"
 
 const interFont = Inter({ subsets: ["latin"] });
 

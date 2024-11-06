@@ -18,16 +18,18 @@ export default async function Home() {
             <p>{JSON.stringify(session.user)}</p>
           </div>
         ) : (
-          <Button variant="outline" type="submit">
-            <Image
-              src="/google.svg"
-              alt="Google"
-              width={300}
-              height={300}
-              className="size-4 aspect-square object-cover"
-            />
-            Signin with google
-          </Button>
+          <div className="">
+            <Button variant="outline" type="submit">
+              <Image
+                src="/google.svg"
+                alt="Google"
+                width={300}
+                height={300}
+                className="size-4 aspect-square object-cover"
+              />
+              Signin with google
+            </Button>
+          </div>
         )}
       </form>
     </div>
