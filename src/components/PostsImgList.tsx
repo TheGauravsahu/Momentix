@@ -9,6 +9,7 @@ export default function PostsImgList({ posts }: { posts: Post[] | undefined }) {
       {posts?.map((post) => (
         <Link
           href={"/p/" + post.id}
+          prefetch={true}
           key={post.id}
           className="aspect-square overflow-hidden bg-gray-100 cursor-pointer hover:scale-95 hover:opacity-80 transition-all ease-in-out"
         >

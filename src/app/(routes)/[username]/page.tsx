@@ -36,7 +36,7 @@ export default async function ProfilePage({
       <div className="flex items-center justify-around w-full border-b p-4">
         <NavigateBack />
         <h2>{username}</h2>
-        <Link href="/settings">
+        <Link prefetch={true} href="/settings">
           <Cog />
         </Link>
       </div>

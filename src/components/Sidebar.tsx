@@ -16,7 +16,7 @@ export default async function Sidebar() {
         <div className="flex flex-col gap-12">
           {/* Top --> Logo */}
           <div className="font-semibold text-xl">
-            <Link href="/">
+            <Link prefetch={true} href="/">
               <h1
                 className={`inline-flex gap-1 items-center ${nunitoSans.className}`}
               >
@@ -29,7 +29,7 @@ export default async function Sidebar() {
           {/* Sidebar Items */}
           <div className="flex flex-col gap-6">
             {navItems.map((item, index) => (
-              <Link href={item.href} key={index}>
+              <Link href={item.href} key={index} prefetch={true}>
                 <h3 className="flex gap-1 items-center">
                   {<item.icon />}
                   {item.name}

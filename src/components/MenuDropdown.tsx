@@ -60,14 +60,14 @@ export default function MenuDropdown({ username }: { username: string }) {
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <Link href={username ? `/${username}` : "/settings"}>
+          <Link prefetch={true} href={username ? `/${username}` : "/settings"}>
             <DropdownMenuItem>
               <User />
               <span>Profile</span>
             </DropdownMenuItem>
           </Link>
 
-          <Link href="/settings">
+          <Link prefetch={true} href="/settings">
             <DropdownMenuItem>
               <Settings />
               <span>Settings</span>
