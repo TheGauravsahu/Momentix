@@ -46,13 +46,36 @@ export async function fetchPost(id: string) {
       },
       include: {
         profile: true,
-        comments: true,
+        comments: {
+          include: {
+            profile: true,
+          },
+        },
         likes: true,
       },
     });
     return post;
   } catch (error) {
     console.log("Failed to fetch post.", error);
+    return null;
+  }
+}
+
+
+export async function fetchBookmarkedPosts(profileId: string) {
+  try {
+    const bookmarkedPosts = await prisma.bookmark.findMany({
+      where: {
+        profileId,
+      },
+      include: {
+        post: true,
+      },
+    });
+
+    return bookmarkedPosts.map((bookmark) => bookmark.post);
+  } catch (error) {
+    console.log("Failed to fetch bookmarked post.", error);
     return null;
   }
 }

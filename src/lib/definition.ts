@@ -7,6 +7,10 @@ export interface ProfileWithExtras extends Profile {
 
 export interface PostWithExtras extends Post {
   profile: Profile;
-  comments: Comment[];
+  comments: CommentWithExtras[];
   likes: Like[];
+}
+
+export interface CommentWithExtras extends Comment {
+  profile: Profile;
 }

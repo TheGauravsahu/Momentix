@@ -51,8 +51,8 @@ export default async function PostContent({ post }: { post: PostWithExtras }) {
             <MiniProfile
               key={comment.id}
               text={comment.text}
-              username={post?.profile.username as string}
-              avatar={post?.profile.avatar as string}
+              username={comment.profile.username as string}
+              avatar={comment.profile.avatar as string}
             />
           ))}
         </div>
@@ -80,7 +80,7 @@ export default async function PostContent({ post }: { post: PostWithExtras }) {
 
           {/* Add Comment */}
           <AddComment
-            profile={post?.profile as Profile}
+            profile={profile as Profile}
             postId={post?.id as string}
           />
         </div>

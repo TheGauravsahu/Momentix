@@ -16,11 +16,11 @@ export default function MiniProfile({
       <div className="aspect-square rounded-full size-8 bg-gray-100 overflow-hidden">
         <Image src={avatar || ""} alt="postProfile" width={300} height={300} />
       </div>
-      <div className="flex flex-col md:flex-row md:items-center gap-2 w-full">
+      <div className="flex flex-col md:flex-row flex-wrap md:items-center gap-1 w-full">
         <Link href={("/" + username) as string} className="cursor-pointer">
           <p className="text-sm leading-tight font-semibold">@{username}</p>
         </Link>
-        <p className="text-sm font-semibold mt-1">{text}</p>
+        <p className="text-sm font-semibold mt-1 leading-tight">{text}</p>
       </div>
     </div>
   );

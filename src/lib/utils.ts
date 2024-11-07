@@ -8,12 +8,14 @@ export function cn(...inputs: ClassValue[]) {
 
 export const getUserEmail = async () => {
   const session = await auth();
+  if (!session) {
+    return "";
+  }
   const userEmail = session?.user?.email;
 
   if (!userEmail) {
-    return "Not signed! Please signin to continue.";
+    return "";
   }
 
   return userEmail;
 };
-

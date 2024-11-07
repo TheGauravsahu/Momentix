@@ -1,7 +1,7 @@
 import NavigateBack from "@/components/NavigateBack";
 import PostsImgList from "@/components/PostsImgList";
 import { Button } from "@/components/ui/button";
-import { fetchProfile } from "@/lib/data";
+import { fetchBookmarkedPosts, fetchProfile } from "@/lib/data";
 import { ProfileWithExtras } from "@/lib/definition";
 import { getUserEmail } from "@/lib/utils";
 import { Cog } from "lucide-react";
@@ -9,6 +9,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import React from "react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Post } from "@prisma/client";
+
 
 export default async function ProfilePage({
   params,
@@ -26,6 +29,7 @@ export default async function ProfilePage({
     notFound();
   }
 
+  const bookmarkedPosts = await fetchBookmarkedPosts(profile.id);
   return (
     <div className="w-full h-full">
       {/* Header */}
@@ -68,10 +72,18 @@ export default async function ProfilePage({
       </div>
 
       {/* Posts */}
-      <div className="max-w-4xl mx-auto p-8">
-        <h2 className="text-center border-t pt-2">Posts</h2>
-        <PostsImgList posts={profile?.posts} />
-      </div>
+      <Tabs defaultValue="posts" className="max-w-4xl mx-auto p-8">
+        <TabsList className="flex justify-center space-x-4 bg-transparent">
+          <TabsTrigger value="posts">Posts</TabsTrigger>
+          <TabsTrigger value="bookmarked">Bookmarked</TabsTrigger>
+        </TabsList>
+        <TabsContent value="posts">
+          <PostsImgList posts={profile?.posts} />
+        </TabsContent>
+        <TabsContent value="bookmarked">
+          <PostsImgList posts={bookmarkedPosts as Post[]} />
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }

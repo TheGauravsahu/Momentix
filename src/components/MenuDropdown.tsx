@@ -60,7 +60,7 @@ export default function MenuDropdown({ username }: { username: string }) {
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <Link href={`/${username}`}>
+          <Link href={username ? `/${username}` : "/settings"}>
             <DropdownMenuItem>
               <User />
               <span>Profile</span>
