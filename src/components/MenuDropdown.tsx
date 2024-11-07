@@ -60,19 +60,19 @@ export default function MenuDropdown({ username }: { username: string }) {
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem>
-            <Link href={`/${username}`} className="flex gap-1 items-center">
+          <Link href={`/${username}`}>
+            <DropdownMenuItem>
               <User />
               <span>Profile</span>
-            </Link>
-          </DropdownMenuItem>
+            </DropdownMenuItem>
+          </Link>
 
-          <DropdownMenuItem>
-            <Link href="/settings" className="flex gap-1 items-center">
+          <Link href="/settings">
+            <DropdownMenuItem>
               <Settings />
               <span>Settings</span>
-            </Link>
-          </DropdownMenuItem>
+            </DropdownMenuItem>
+          </Link>
 
           <DropdownMenuItem>
             <div className="flex items-center space-x-2">

@@ -67,3 +67,64 @@ export async function createPost(previousState: unknown, formData: FormData) {
   }
   redirect(`/p/${post.id}`);
 }
+
+export async function createComment(
+  previousState: unknown,
+  formData: FormData
+) {
+  try {
+    const postId = formData.get("postId") as string;
+
+    await prisma.comment.create({
+      data: {
+        text: formData.get("comment") as string,
+        postId,
+        profileId: formData.get("profileId") as string,
+      },
+    });
+
+    revalidatePath("/p/" + postId);
+  } catch (error) {
+    console.error("Error creating comment:", error);
+    return "Server Error: Unable to create comment.";
+  }
+}
+
+export async function likePost(formData: FormData) {
+  try {
+    const postId = formData.get("postId") as string;
+    const profileId = formData.get("profileId") as string;
+
+    const like = await prisma.like.findUnique({
+      where: {
+        profileId_postId: {
+          postId,
+          profileId,
+        },
+      },
+    });
+
+    if (like) {
+      await prisma.like.delete({
+        where: {
+          profileId_postId: {
+            postId,
+            profileId,
+          },
+        },
+      });
+    } else {
+      await prisma.like.create({
+        data: {
+          postId,
+          profileId,
+        },
+      });
+
+      revalidatePath(`/p/${postId}`);
+    }
+  } catch (error) {
+    console.error("Error liking post:", error);
+    return null;
+  }
+}

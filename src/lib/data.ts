@@ -9,9 +9,6 @@ export async function getCurrentUserProfile() {
       where: {
         email,
       },
-      include: {
-        posts: true,
-      },
     });
     return profile;
   } catch (error) {
@@ -26,6 +23,9 @@ export async function fetchProfile(username: string) {
       where: {
         username,
       },
+      include: {
+        posts: true,
+      },
     });
     return profile;
   } catch (error) {
@@ -34,4 +34,21 @@ export async function fetchProfile(username: string) {
   }
 }
 
-
+export async function fetchPost(id: string) {
+  try {
+    const post = await prisma.post.findFirst({
+      where: {
+        id,
+      },
+      include: {
+        profile: true,
+        comments: true,
+        likes: true,
+      },
+    });
+    return post;
+  } catch (error) {
+    console.log("Failed to fetch post.", error);
+    return null;
+  }
+}
