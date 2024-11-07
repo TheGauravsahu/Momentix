@@ -129,3 +129,43 @@ export async function likePost(formData: FormData) {
     return null;
   }
 }
+
+export async function bookmarkPost(formData: FormData) {
+  const postId = formData.get("postId") as string;
+  const profileId = formData.get("profileId") as string;
+
+  try {
+    const existingBookmark = await prisma.bookmark.findUnique({
+      where: {
+        profileId_postId: {
+          postId,
+          profileId,
+        },
+      },
+    });
+
+    if (existingBookmark) {
+      await prisma.bookmark.delete({
+        where: {
+          profileId_postId: {
+            postId,
+            profileId,
+          },
+        },
+      });
+      revalidatePath(`/p/${postId}`);
+    } else {
+      await prisma.bookmark.create({
+        data: {
+          postId,
+          profileId,
+        },
+      });
+    }
+    revalidatePath(`/p/${postId}`);
+
+  } catch (error) {
+    console.error("Error bookmarking post:", error);
+    return null;
+  }
+}

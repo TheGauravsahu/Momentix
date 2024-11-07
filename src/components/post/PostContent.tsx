@@ -1,12 +1,13 @@
 import { PostWithExtras } from "@/lib/definition";
-import { Like, Profile } from "@prisma/client";
+import { Bookmark, Like, Profile } from "@prisma/client";
 import Image from "next/image";
 import React from "react";
 import MiniProfile from "./MiniProfile";
 import AddComment from "./AddComment";
-import { Bookmark, MessageCircle } from "lucide-react";
+import { MessageCircle } from "lucide-react";
 import LikeButton from "./LikeButton";
 import { getCurrentUserProfile } from "@/lib/data";
+import BookmarkButton from "./BookmarkButton";
 
 export default async function PostContent({ post }: { post: PostWithExtras }) {
   const profile = await getCurrentUserProfile();
@@ -70,7 +71,11 @@ export default async function PostContent({ post }: { post: PostWithExtras }) {
                 <MessageCircle />
               </span>
             </div>
-            <Bookmark />
+            <BookmarkButton
+              bookmarks={profile?.bookmarks as Bookmark[]}
+              post={post as PostWithExtras}
+              profile={profile as Profile}
+            />
           </div>
 
           {/* Add Comment */}

@@ -9,6 +9,9 @@ export async function getCurrentUserProfile() {
       where: {
         email,
       },
+      include: {
+        bookmarks: true,
+      },
     });
     return profile;
   } catch (error) {
@@ -25,6 +28,7 @@ export async function fetchProfile(username: string) {
       },
       include: {
         posts: true,
+        bookmarks: true,
       },
     });
     return profile;

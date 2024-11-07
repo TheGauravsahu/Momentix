@@ -18,9 +18,9 @@ model Profile {
   posts     Post[]
   likes     Like[]
   comments  Comment[]
-  bookmarks Bookmark[]
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
+  bookmarks Bookmark[]
 
   followers Follower[] @relation("followers")
   following Follower[] @relation("following")
