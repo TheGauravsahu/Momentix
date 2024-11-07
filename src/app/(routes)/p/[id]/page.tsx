@@ -7,7 +7,7 @@ import { PostWithExtras } from "@/lib/definition";
 export default async function PostDetail({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
 
