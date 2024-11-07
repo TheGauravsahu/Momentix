@@ -6,8 +6,7 @@ import { Button } from "./ui/button";
 import { useActionState, useEffect, useRef, useState } from "react";
 import { Loader2, UploadCloud } from "lucide-react";
 import { createPost } from "@/lib/actions";
-import { toast } from "sonner";
-import { log } from "console";
+
 
 export default function CreatePostForm() {
   const fileInputRef = useRef<HTMLInputElement>(null);
