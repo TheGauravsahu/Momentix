@@ -8,28 +8,24 @@ import { Bookmark, MessageCircle } from "lucide-react";
 import LikeButton from "./LikeButton";
 import { getCurrentUserProfile } from "@/lib/data";
 
-export default async function PostContent({
-  post,
-}: {
-  post: PostWithExtras;
-}) {
+export default async function PostContent({ post }: { post: PostWithExtras }) {
   const profile = await getCurrentUserProfile();
 
   return (
-    <div className="border max-w-5xl mx-auto h-[95%] flex flex-col md:flex-row z-[999] bg-white dark:bg-gray-800">
+    <div className="border max-w-5xl mx-auto h-full md:h-[95%] flex flex-col md:flex-row z-[999] bg-white dark:bg-gray-800">
       {/* Left */}
-      <div className="h-full w-[60%] bg-gray-100 aspect-square overflow-hidden">
+      <div className="h-[50%] md:h-full w-full md:w-[60%] bg-gray-100 aspect-square overflow-hidden">
         <Image
           src={post?.imageUrl || ""}
           alt={post?.caption || ""}
           width={1000}
           height={1000}
-          className="w-full h-full"
+          className="w-full h-full object-cover"
         />
       </div>
 
       {/* right */}
-      <div className="w-[40%]">
+      <div className="lg:w-[40%] h-[50%] md:h-full">
         {/* profile info */}
         <div className=" border-b mb-4 border-black dark:border-white w-full">
           <MiniProfile
@@ -49,7 +45,7 @@ export default async function PostContent({
         </div>
 
         {/* Comments */}
-        <div className="h-[65%] w-full overflow-y-scroll">
+        <div className="md:h-[65%] h-[50%] w-full overflow-y-scroll">
           {post?.comments.map((comment) => (
             <MiniProfile
               key={comment.id}
@@ -60,19 +56,24 @@ export default async function PostContent({
           ))}
         </div>
 
-        {/* Add Comment */}
-        <div className="p-2">
-          <div className="flex justify-between mb-2 items-center">
+        {/* Post Interection */}
+        <div className="p-2 w-full">
+          <div className="flex justify-between mb-4 md:mb-2 items-center">
             <div className="flex gap-1 items-center">
               <LikeButton
                 likes={post?.likes as Like[]}
                 post={post as PostWithExtras}
                 profile={profile as Profile}
               />
-              <MessageCircle />
+              <span className="flex gap-1 items-center">
+                {post.comments.length}
+                <MessageCircle />
+              </span>
             </div>
             <Bookmark />
           </div>
+
+          {/* Add Comment */}
           <AddComment
             profile={post?.profile as Profile}
             postId={post?.id as string}

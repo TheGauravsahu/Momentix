@@ -4,8 +4,9 @@ import Image from "next/image";
 import { Input } from "../ui/input";
 import { useActionState } from "react";
 import { createComment } from "@/lib/actions";
-import { Loader2 } from "lucide-react";
+import { Loader2, Send } from "lucide-react";
 import { Profile } from "@prisma/client";
+import { Button } from "../ui/button";
 
 export default function AddComment({
   profile,
@@ -15,10 +16,10 @@ export default function AddComment({
   postId: string;
 }) {
   const [data, action, isPending] = useActionState(createComment, null);
-
+  console.log(data);
 
   return (
-    <form action={action} className="flex gap-1 items-center w-full">
+    <form action={action} className="flex gap-1 items-center w-full p-2">
       <div className="aspect-square rounded-full overflow-hidden size-8">
         <Image
           src={profile.avatar || ""}
@@ -32,11 +33,16 @@ export default function AddComment({
           <Loader2 className="animate-spin" />
         </div>
       ) : (
-        <Input
-          readOnly={isPending}
-          placeholder="Type your comment here."
-          name="comment"
-        />
+        <div className="flex item-center gap-2 w-full">
+          <Input
+            readOnly={isPending}
+            placeholder="Type your comment here."
+            name="comment"
+          />
+          <Button className="block lg:hidden">
+            <Send />
+          </Button>
+        </div>
       )}
 
       {/* hidden */}

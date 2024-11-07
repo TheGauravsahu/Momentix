@@ -15,6 +15,7 @@ export default function LikeButton({
   profile: Profile;
   likes: Like[];
 }) {
+  
   const predicate = (like: Like) =>
     like.profileId === profile.id && like.postId === post.id;
 
@@ -47,7 +48,7 @@ export default function LikeButton({
       <button type="submit">
         <Heart
           fill={optimisticLikes.some(predicate) ? "red" : "none"}
-          stroke={optimisticLikes.some(predicate) ? "0" : "white"}
+          stroke={optimisticLikes.some(predicate) ? "0" : "currentColor"}
         />
       </button>
     </form>

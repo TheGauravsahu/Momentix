@@ -2,6 +2,7 @@ import CloseButton from "@/components/post/CloseButton";
 import PostContent from "@/components/post/PostContent";
 import { fetchPost } from "@/lib/data";
 import { PostWithExtras } from "@/lib/definition";
+import { notFound } from "next/navigation";
 
 export default async function PostModel({
   params,
@@ -10,7 +11,11 @@ export default async function PostModel({
 }) {
   const { id } = await params;
 
-  const post  = await fetchPost(id);
+  const post = await fetchPost(id);
+  
+  if (!post) {
+    notFound();
+  }
 
   return (
     <div className="w-full h-full relative">
@@ -20,7 +25,7 @@ export default async function PostModel({
         <CloseButton />
       </div>
 
-      <div className="w-full h-screen p-4 z-[999] absolute top-0">
+      <div className="w-full h-screen p-8 z-[999] absolute top-0">
         <PostContent post={post as PostWithExtras} />
       </div>
     </div>

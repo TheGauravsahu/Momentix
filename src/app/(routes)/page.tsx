@@ -1,6 +1,7 @@
 import { auth, signIn } from "@/auth";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import { redirect } from "next/navigation";
 
 export default async function Home() {
   const session = await auth();
@@ -11,6 +12,7 @@ export default async function Home() {
         action={async () => {
           "use server";
           await signIn("google");
+          redirect("/settings");
         }}
       >
         {session ? (

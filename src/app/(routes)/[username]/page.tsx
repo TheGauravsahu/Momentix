@@ -7,6 +7,7 @@ import { getUserEmail } from "@/lib/utils";
 import { Cog } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import React from "react";
 
 export default async function ProfilePage({
@@ -21,6 +22,10 @@ export default async function ProfilePage({
 
   // console.log(profile, "Profile fetched by /" + profile?.id);
 
+  if (!profile) {
+    notFound();
+  }
+
   return (
     <div className="w-full h-full">
       {/* Header */}
@@ -33,13 +38,14 @@ export default async function ProfilePage({
       </div>
 
       {/* Profile */}
-      <div className="p-4 flex justify-center gap-16">
-        <div className="aspect-square size-44 rounded-full overflow-hidden">
+      <div className="p-4 flex justify-center gap-16 w-full">
+        <div className="aspect-square lg:size-44 size-36 rounded-full overflow-hidden bg-gray-100">
           <Image
             src={profile?.avatar || ""}
             alt={profile?.username || ""}
             width={300}
             height={300}
+            className="w-full h-full"
           />
         </div>
 

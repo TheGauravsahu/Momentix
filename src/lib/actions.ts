@@ -113,6 +113,7 @@ export async function likePost(formData: FormData) {
           },
         },
       });
+      revalidatePath(`/p/${postId}`);
     } else {
       await prisma.like.create({
         data: {
