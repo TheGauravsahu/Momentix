@@ -44,7 +44,7 @@ export default async function ProfilePage({
 
       {/* Profile */}
       <div className="p-4 flex justify-center gap-16 w-full">
-        <div className="aspect-square lg:size-44 size-36 rounded-full overflow-hidden bg-gray-100">
+        <div className="aspect-square lg:size-44 size-36 rounded-full overflow-hidden bg-gray-100 dark:bg-gray-900">
           <Image
             src={profile?.avatar || ""}
             alt={profile?.username || ""}
