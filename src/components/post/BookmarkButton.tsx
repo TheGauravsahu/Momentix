@@ -48,6 +48,7 @@ export default function BookmarkButton({
 
       <input type="hidden" name="postId" value={post.id} />
       <input type="hidden" name="profileId" value={profile.id as string} />
+      <input type="hidden" name="username" value={profile.username as string} />
     </form>
   );
 }

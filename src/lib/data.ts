@@ -1,3 +1,4 @@
+import { ProfileWithExtras } from "./definition";
 import { prisma } from "./prisma";
 import { getUserEmail } from "./utils";
 
@@ -28,10 +29,14 @@ export async function fetchProfile(username: string) {
       },
       include: {
         posts: true,
-        bookmarks: true,
+        bookmarks: {
+          include: {
+            post: true,
+          },
+        },
       },
     });
-    return profile;
+    return profile as ProfileWithExtras | null;
   } catch (error) {
     console.log("Failed to fetch profile", error);
     return null;
@@ -62,20 +67,3 @@ export async function fetchPost(id: string) {
 }
 
 
-export async function fetchBookmarkedPosts(profileId: string) {
-  try {
-    const bookmarkedPosts = await prisma.bookmark.findMany({
-      where: {
-        profileId,
-      },
-      include: {
-        post: true,
-      },
-    });
-
-    return bookmarkedPosts.map((bookmark) => bookmark.post);
-  } catch (error) {
-    console.log("Failed to fetch bookmarked post.", error);
-    return null;
-  }
-}

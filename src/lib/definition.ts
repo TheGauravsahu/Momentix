@@ -2,7 +2,7 @@ import { Bookmark, Comment, Like, Post, Profile } from "@prisma/client";
 
 export interface ProfileWithExtras extends Profile {
   posts: Post[];
-  bookmarks: Bookmark[];
+  bookmarks: BookmarkWithExtras[];
 }
 
 export interface PostWithExtras extends Post {
@@ -13,4 +13,8 @@ export interface PostWithExtras extends Post {
 
 export interface CommentWithExtras extends Comment {
   profile: Profile;
+}
+
+export interface BookmarkWithExtras extends Bookmark {
+  post: Post;
 }

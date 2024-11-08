@@ -133,6 +133,7 @@ export async function likePost(formData: FormData) {
 export async function bookmarkPost(formData: FormData) {
   const postId = formData.get("postId") as string;
   const profileId = formData.get("profileId") as string;
+  const username = formData.get("username") as string;
 
   try {
     const existingBookmark = await prisma.bookmark.findUnique({
@@ -154,6 +155,7 @@ export async function bookmarkPost(formData: FormData) {
         },
       });
       revalidatePath(`/p/${postId}`);
+      revalidatePath(`/${username}`);
     } else {
       await prisma.bookmark.create({
         data: {
@@ -163,7 +165,7 @@ export async function bookmarkPost(formData: FormData) {
       });
     }
     revalidatePath(`/p/${postId}`);
-
+    revalidatePath(`/${username}`);
   } catch (error) {
     console.error("Error bookmarking post:", error);
     return null;

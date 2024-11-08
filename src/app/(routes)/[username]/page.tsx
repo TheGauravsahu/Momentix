@@ -1,7 +1,7 @@
 import NavigateBack from "@/components/NavigateBack";
 import PostsImgList from "@/components/PostsImgList";
 import { Button } from "@/components/ui/button";
-import { fetchBookmarkedPosts, fetchProfile } from "@/lib/data";
+import { fetchProfile } from "@/lib/data";
 import { ProfileWithExtras } from "@/lib/definition";
 import { getUserEmail } from "@/lib/utils";
 import { Cog } from "lucide-react";
@@ -12,7 +12,6 @@ import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Post } from "@prisma/client";
 
-
 export default async function ProfilePage({
   params,
 }: {
@@ -21,15 +20,17 @@ export default async function ProfilePage({
   const { username } = await params;
 
   const profile: ProfileWithExtras | null = await fetchProfile(username);
+  if (!profile) {
+    notFound();
+    return null;
+  }
+
   const currentUserEmail = await getUserEmail();
 
   // console.log(profile, "Profile fetched by /" + profile?.id);
 
-  if (!profile) {
-    notFound();
-  }
+  const bookmarkedPosts = profile.bookmarks.map((bookmark) => bookmark.post);
 
-  const bookmarkedPosts = await fetchBookmarkedPosts(profile.id);
   return (
     <div className="w-full h-full">
       {/* Header */}
