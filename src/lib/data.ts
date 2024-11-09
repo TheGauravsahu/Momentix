@@ -12,6 +12,12 @@ export async function getCurrentUserProfile() {
       },
       include: {
         bookmarks: true,
+        following: {
+          include: {
+            following: true,
+          },
+        },
+        followers: { include: { follower: true } },
       },
     });
     return profile;
@@ -28,12 +34,16 @@ export async function fetchProfile(username: string) {
         username,
       },
       include: {
-        posts: true,
+        posts: {
+          orderBy: { createdAt: "desc" },
+        },
         bookmarks: {
           include: {
             post: true,
           },
         },
+        following: { include: { following: true } },
+        followers: { include: { follower: true } },
       },
     });
     return profile as ProfileWithExtras | null;
@@ -65,5 +75,3 @@ export async function fetchPost(id: string) {
     return null;
   }
 }
-
-

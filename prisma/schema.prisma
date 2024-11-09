@@ -22,20 +22,20 @@ model Profile {
   updatedAt DateTime   @updatedAt
   bookmarks Bookmark[]
 
-  followers Follower[] @relation("followers")
-  following Follower[] @relation("following")
+  followers Follow[] @relation("following")
+  following  Follow[] @relation("follower")
 }
 
-model Follower {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  followerId String?  @db.ObjectId // current user's Id
-  followedId String?  @db.ObjectId // being followed by current user.
-  createdAt  DateTime @default(now())
+model Follow {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  followerId  String   @db.ObjectId // The user who is following
+  followingId String   @db.ObjectId // The user being followed
+  createdAt   DateTime @default(now())
 
-  follower Profile? @relation("followers", fields: [followerId], references: [id])
-  followed Profile? @relation("following", fields: [followedId], references: [id])
+  follower  Profile @relation("follower", fields: [followerId], references: [id])
+  following Profile @relation("following", fields: [followingId], references: [id])
 
-  @@unique([followerId, followedId])
+  @@unique([followerId, followingId])
 }
 
 model Post {

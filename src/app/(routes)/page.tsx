@@ -2,6 +2,7 @@ import { auth, signIn } from "@/auth";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { redirect } from "next/navigation";
+import { toast } from "sonner";
 
 export default async function Home() {
   const session = await auth();
@@ -12,6 +13,7 @@ export default async function Home() {
         action={async () => {
           "use server";
           await signIn("google");
+          toast.success("Signed in.")
           redirect("/settings");
         }}
       >

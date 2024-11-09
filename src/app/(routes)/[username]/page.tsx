@@ -1,9 +1,7 @@
 import NavigateBack from "@/components/NavigateBack";
 import PostsImgList from "@/components/PostsImgList";
-import { Button } from "@/components/ui/button";
-import { fetchProfile } from "@/lib/data";
+import { fetchProfile, getCurrentUserProfile } from "@/lib/data";
 import { ProfileWithExtras } from "@/lib/definition";
-import { getUserEmail } from "@/lib/utils";
 import { Cog } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -11,6 +9,7 @@ import { notFound } from "next/navigation";
 import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Post } from "@prisma/client";
+import FollowProfile from "@/components/FollowProfile";
 
 export default async function ProfilePage({
   params,
@@ -25,9 +24,10 @@ export default async function ProfilePage({
     return null;
   }
 
-  const currentUserEmail = await getUserEmail();
+  const currentUser = await getCurrentUserProfile();
 
-  // console.log(profile, "Profile fetched by /" + profile?.id);
+  // console.log(profile, "Profile fetched by /" + profile?.username);
+  // console.log(currentUser, "Curent User Profile fetched by /" + currentUser?.username);
 
   const bookmarkedPosts = profile.bookmarks.map((bookmark) => bookmark.post);
 
@@ -57,13 +57,24 @@ export default async function ProfilePage({
         <div className="flex flex-col  justify-center gap-0">
           <div className="flex items-center gap-4">
             <h1 className="text-lg font-semibold">{profile?.username}</h1>
-            {!(currentUserEmail === profile?.email) && <Button>Follow</Button>}
+            {!(currentUser?.email === profile?.email) && (
+              <FollowProfile
+                currentUserId={currentUser?.id as string}
+                profileUserId={profile.id as string}
+                isFollowing={
+                  currentUser?.following?.some(
+                    (following) => following.followingId === profile.id
+                  ) || false
+                }
+                username={username}
+              />
+            )}
           </div>
 
-          <div className="flex items-center gap-4 my-4 font-semibold">
-            <span>12 posts</span>
-            <span>121k followers</span>
-            <span>232 following</span>
+          <div className="flex items-center gap-4 my-4 font-semibold cursor-pointer">
+            <span>{profile.posts.length} posts</span>
+            <span>{profile.followers.length} followers</span>
+            <span>{profile.following.length} following</span>
           </div>
 
           <h3>{profile?.name}</h3>

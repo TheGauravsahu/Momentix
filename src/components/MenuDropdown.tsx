@@ -14,7 +14,7 @@ import Link from "next/link";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { useRouter } from "next/navigation";
-import { useActionState, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { LogoutProfile } from "@/lib/actions";
 import { toast } from "sonner";
 
@@ -42,11 +42,13 @@ export default function MenuDropdown({ username }: { username: string }) {
     router.refresh();
   };
 
-  const [data, action, isPending] = useActionState(LogoutProfile, null);
-
-  if (data) {
-    toast(data);
-  }
+  const handleLogout = async () => {
+    const response = await LogoutProfile();
+    toast(response);
+    if (response === "Logged out.") {
+      router.push("/");
+    }
+  };
 
   return (
     <DropdownMenu>
@@ -88,12 +90,10 @@ export default function MenuDropdown({ username }: { username: string }) {
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem>
-          <form action={action}>
-            <Button disabled={isPending} variant="ghost">
-              <LogOut />
-              <span>Log out</span>
-            </Button>
-          </form>
+          <Button onClick={handleLogout} variant="ghost">
+            <LogOut />
+            <span>Log out</span>
+          </Button>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

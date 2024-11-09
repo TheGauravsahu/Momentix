@@ -13,13 +13,7 @@ export default async function CreatePage() {
   return (
     <div className="max-w-4xl mx-auto h-full p-4">
       <h1 className="text-xl my-2 font-semibold">Create a post.</h1>
-      {session ? (
-        <CreatePostForm />
-      ) : (
-        <div className="flex items-center justify-center h-full w-full">
-          <h1>Please Login to Create Posts.</h1>
-        </div>
-      )}
+      <CreatePostForm />
     </div>
   );
 }

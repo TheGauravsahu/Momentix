@@ -39,14 +39,8 @@ export async function upsertProfile(
 }
 
 export async function LogoutProfile() {
-  try {
-    await signOut();
-    revalidatePath("/");
-    return "Logged out.";
-  } catch (error) {
-    console.log("Error creating post.", error);
-    return "Error: Failed to logged out..";
-  }
+  await signOut();
+  return "Logged out.";
 }
 
 export async function createPost(previousState: unknown, formData: FormData) {
@@ -169,5 +163,51 @@ export async function bookmarkPost(formData: FormData) {
   } catch (error) {
     console.error("Error bookmarking post:", error);
     return null;
+  }
+}
+
+export async function followProfile(formData: FormData) {
+  const followingId = formData.get("followingId") as string;
+  const followerId = formData.get("followerId") as string;
+
+  const username = formData.get("username") as string;
+
+  const existingFollow = await prisma.follow.findUnique({
+    where: {
+      followerId_followingId: {
+        followingId,
+        followerId,
+      },
+    },
+  });
+
+  if (existingFollow) {
+    try {
+      await prisma.follow.delete({
+        where: {
+          followerId_followingId: {
+            followingId,
+            followerId,
+          },
+        },
+      });
+      revalidatePath(`/${username}`);
+    } catch (error) {
+      console.error("Error unfollowing post:", error);
+      return "Failed to unfollow.";
+    }
+  } else {
+    try {
+      await prisma.follow.create({
+        data: {
+          followingId,
+          followerId,
+        },
+      });
+      revalidatePath(`/${username}`);
+    } catch (error) {
+      console.error("Error following.", error);
+      return "Failed to follow.";
+    }
   }
 }
