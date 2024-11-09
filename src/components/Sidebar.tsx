@@ -11,7 +11,7 @@ export default async function Sidebar() {
   const profile = await getCurrentUserProfile();
 
   return (
-    <aside className="w-64 border-r min-h-screen p-8 hidden md:block">
+    <aside className="w-64 border-r min-h-screen p-8 hidden lg:block">
       <div className="sticky top-0 left-0 h-full flex flex-col justify-between items-start">
         <div className="flex flex-col gap-12">
           {/* Top --> Logo */}

@@ -56,7 +56,7 @@ export default function MenuDropdown({ username }: { username: string }) {
           More
         </span>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56 ml-3">
+      <DropdownMenuContent className="w-56 ml-3" side="top">
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>

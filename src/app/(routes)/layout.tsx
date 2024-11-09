@@ -24,10 +24,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${interFont.className} antialiased h-full w-full`}>
+      <body className={`${interFont.className} antialiased min-h-screen w-full`}>
         {post}
         <MobileNav />
-        <main className="flex gap-1">
+        <main className="lg:flex lg:gap-1">
           <Sidebar />
           {children}
         </main>

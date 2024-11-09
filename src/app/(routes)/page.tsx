@@ -7,7 +7,7 @@ export default async function Home() {
   const session = await auth();
 
   return (
-    <div className="p-8">
+    <div className="lg:p-8">
       <form
         action={async () => {
           "use server";
@@ -16,7 +16,7 @@ export default async function Home() {
         }}
       >
         {session ? (
-          <div className="">
+          <div className="max-w-20 mx-auto lg:w-full">
             <p>{JSON.stringify(session.user)}</p>
           </div>
         ) : (
