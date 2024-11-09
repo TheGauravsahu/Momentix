@@ -33,7 +33,7 @@ export default function RootLayout({
           <Sidebar />
           {children}
         </main>
-        <Toaster position="bottom-right" reverseOrder={false} />
+        <Toaster />
         <ThemeObserver />
         <SpeedInsights />
       </body>
