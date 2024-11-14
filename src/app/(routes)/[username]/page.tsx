@@ -9,6 +9,15 @@ import { notFound } from "next/navigation";
 import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Post } from "@prisma/client";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import MiniProfile from "@/components/post/MiniProfile";
 import FollowProfile from "@/components/FollowProfile";
 
 export default async function ProfilePage({
@@ -73,8 +82,46 @@ export default async function ProfilePage({
 
           <div className="flex items-center gap-4 my-4 font-semibold cursor-pointer">
             <span>{profile.posts.length} posts</span>
-            <span>{profile.followers.length} followers</span>
-            <span>{profile.following.length} following</span>
+            <Dialog>
+              <DialogTrigger>
+                {profile.followers.length} followers
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Followers</DialogTitle>
+                  <DialogDescription>
+                    {profile.followers.map((f) => (
+                      <MiniProfile
+                        key={f.id}
+                        username={f.follower.username}
+                        avatar={f.follower.avatar || ""}
+                      />
+                    ))}
+                  </DialogDescription>
+                </DialogHeader>
+              </DialogContent>
+            </Dialog>
+
+            {/* Following */}
+            <Dialog>
+              <DialogTrigger>
+                {profile.following.length} following
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Followings</DialogTitle>
+                  <DialogDescription>
+                    {profile.following.map((f) => (
+                      <MiniProfile
+                        key={f.id}
+                        username={f.following.username}
+                        avatar={f.following.avatar || ""}
+                      />
+                    ))}
+                  </DialogDescription>
+                </DialogHeader>
+              </DialogContent>
+            </Dialog>
           </div>
 
           <h3>{profile?.name}</h3>

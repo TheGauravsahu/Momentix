@@ -75,3 +75,8 @@ export async function fetchPost(id: string) {
     return null;
   }
 }
+
+export async function fetchFollowingPosts() {
+  const posts = await prisma.post.findMany();
+  return posts;
+}
