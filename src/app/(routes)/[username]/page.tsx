@@ -19,6 +19,13 @@ import {
 } from "@/components/ui/dialog";
 import MiniProfile from "@/components/post/MiniProfile";
 import FollowProfile from "@/components/FollowProfile";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Profile – Momentix",
+  description:
+    "Explore user profiles on Momentix. Dive into their posts, followers, and shared moments. Discover stories, connect with creators, and celebrate moments with the vibrant Momentix community.",
+};
 
 export default async function ProfilePage({
   params,

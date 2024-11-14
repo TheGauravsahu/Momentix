@@ -7,7 +7,6 @@ import { useActionState, useEffect, useRef, useState } from "react";
 import { Loader2, UploadCloud } from "lucide-react";
 import { createPost } from "@/lib/actions";
 
-
 export default function CreatePostForm() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [file, setFile] = useState<File | null>(null);
@@ -73,7 +72,7 @@ export default function CreatePostForm() {
           </Button>
         </div>
       </div>
-      <div className="grid w-full gap-1.5 my-4">
+      <div className="grid w-[20rem]  gap-1.5 my-4">
         <Label htmlFor="message">Your caption</Label>
         <Textarea
           placeholder="Type your caption here."

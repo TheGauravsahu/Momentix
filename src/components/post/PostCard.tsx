@@ -37,7 +37,7 @@ export default async function PostCard({
           width={300}
           height={300}
           alt={post.caption}
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover bg-gray-300"
         />
       </Link>
 

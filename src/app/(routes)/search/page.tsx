@@ -4,6 +4,13 @@ import { Input } from "@/components/ui/input";
 import { prisma } from "@/lib/prisma";
 import { Profile } from "@prisma/client";
 import Form from "next/form";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Search – Momentix",
+  description:
+    "Discover and connect with people on Momentix. Use the search feature to find profiles and explore the vibrant community. Whether you're looking for friends, creators, or inspiration, Momentix makes it easy to search and engage.",
+};
 
 export default async function Search({
   searchParams,
