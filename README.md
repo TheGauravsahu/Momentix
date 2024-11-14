@@ -1,11 +1,7 @@
-Here’s a polished `README.md` for your GitHub repository:
-
-````markdown
 # Momentix – Evoking the Idea of Capturing Moments
 
 [![Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-%23000000)](https://momentix.vercel.app)
 [![Next.js](https://img.shields.io/badge/Framework-Next.js-%23000000)](https://nextjs.org/)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 **Momentix** is a fresh, engaging platform designed for capturing, sharing, and celebrating life's moments. It emphasizes the power of each snap to tell a story, fostering an authentic community where users create connections through their everyday moments. With an intuitive interface and sleek design, Momentix makes sharing easy and fun, enabling users to showcase their world and discover others’ experiences.
 
@@ -41,7 +37,7 @@ Clone the repository:
 git clone https://github.com/your-username/momentix.git
 cd momentix
 ```
-````
+
 
 Install dependencies:
 
@@ -78,12 +74,6 @@ Open [http://localhost:3000](http://localhost:3000) in your browser to see the a
 
 The project relies on a variety of robust packages. Here are a few key ones:
 
-- **@prisma/client**: Database interaction.
-- **@radix-ui/react**: Accessible UI components.
-- **next-auth**: Authentication for Next.js.
-- **shadcn/ui**: Pre-built design components.
-- **tailwindcss**: Utility-first CSS framework.
-
 Refer to the `package.json` file for the full list of dependencies.
 
 ## 🤝 Contribution
@@ -92,9 +82,9 @@ Contributions are welcome! Please open an issue or submit a pull request to cont
 
 ---
 
-Crafted with ❤️ by [Your Name](https://github.com/your-username).
+Crafted with ❤️ by Gaurav Sahu(https://github.com/TheGauravsahu).
 
-```
 
 Feel free to modify the author information and add any additional sections you find necessary!
-```
+
+
