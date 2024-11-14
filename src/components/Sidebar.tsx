@@ -11,8 +11,8 @@ export default async function Sidebar() {
   const profile = await getCurrentUserProfile();
 
   return (
-    <aside className="w-64 border-r min-h-screen p-8 hidden lg:block">
-      <div className="sticky top-0 left-0 h-full flex flex-col justify-between items-start">
+    <aside className="w-64 border-r h-screen p-8 hidden lg:block fixed top-0 left-0 z-[999]">
+      <div className="h-full flex flex-col justify-between items-start ">
         <div className="flex flex-col gap-12">
           {/* Top --> Logo */}
           <div className="font-semibold text-xl">
@@ -39,6 +39,7 @@ export default async function Sidebar() {
           </div>
         </div>
 
+        <div />
         {/* Bottom */}
         <MenuDropdown username={profile?.username as string} />
       </div>

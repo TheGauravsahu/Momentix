@@ -77,6 +77,25 @@ export async function fetchPost(id: string) {
 }
 
 export async function fetchFollowingPosts() {
-  const posts = await prisma.post.findMany();
-  return posts;
+  const currentProfile = await getCurrentUserProfile();
+
+  try {
+    const posts = await prisma.post.findMany({
+      where: {
+        profileId: { in: currentProfile?.following.map((f) => f.followingId) },
+      },
+      include: {
+        likes: true,
+        comments: true,
+        profile: true,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+    return posts;
+  } catch (error) {
+    console.log("Failed to fetch following post.", error);
+    return [];
+  }
 }

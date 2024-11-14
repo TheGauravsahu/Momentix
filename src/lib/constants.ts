@@ -13,7 +13,7 @@ export const navItems = [
   },
   {
     name: "Explore",
-    href: "/explore",
+    href: "/",
     icon: Compass,
   },
   {

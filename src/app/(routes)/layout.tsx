@@ -27,11 +27,13 @@ export default function RootLayout({
       <body
         className={`${interFont.className} antialiased min-h-screen w-full`}
       >
-        {post}
         <MobileNav />
-        <main className="lg:flex lg:gap-1">
+        <main className="lg:flex lg:gap-1 lg:items-center lg:justify-center w-full h-full">
           <Sidebar />
-          {children}
+          <div className="lg:ml-64 w-full h-full">
+            {post}
+            {children}
+          </div>
         </main>
         <Toaster />
         <ThemeObserver />

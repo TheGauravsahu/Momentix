@@ -5,7 +5,7 @@ import React from "react";
 
 export default function PostsImgList({ posts }: { posts: Post[] | undefined }) {
   return (
-    <div className="flex items-center gap-2 flex-wrap mt-2 w-full">
+    <div className="flex items-center  gap-2 flex-wrap mt-2 w-full">
       {posts?.map((post) => (
         <Link
           href={"/p/" + post.id}
